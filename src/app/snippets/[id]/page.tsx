@@ -1,6 +1,8 @@
 import React from "react";
 import { db } from "@/db";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import { deleteSnippet } from "@/actions";
 
 interface SnippetShowPageProps {
   params: Promise<{
@@ -24,11 +26,27 @@ async function SnippetShowSingle(props: SnippetShowPageProps) {
   if (!snippet) {
     return notFound();
   }
+
+  const deleteSnippetAction = deleteSnippet.bind(null, parseInt(id));
+
   return (
     <div>
-      <div>
-        {snippet.id} ~~~ {snippet.title} ~~~ {snippet.code}
+      <div className="flex m-4 justify-between items-center">
+        <h1 className="text-xl font-bold">{snippet.title}</h1>
+        <div>
+          <Link href={`/snippets/${id}/edit`} className="p-2 border rounded">
+            Edit
+          </Link>
+          <form action={deleteSnippetAction}>
+            <button className="p-2 border rounded" type="submit">
+              Delete
+            </button>
+          </form>
+        </div>
       </div>
+      <pre className="p-3 border rounded bg-gray-200 border-gray-200">
+        <code>{snippet.code}</code>
+      </pre>
     </div>
   );
 }

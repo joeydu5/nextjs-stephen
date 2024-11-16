@@ -40,7 +40,7 @@ function SnippetCreatePage() {
           </div>
           <div className="flex gap-4">
             <label htmlFor="code" className="w-12">
-              Title
+              Code
             </label>
             <textarea
               name="code"
